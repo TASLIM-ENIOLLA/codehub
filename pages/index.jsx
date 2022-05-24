@@ -11,11 +11,8 @@ export default ({Footer: {year}}) => {
             <AboutArea />
             <Courses />
             <PricingArea />
-            {/* <CTAArea /> */}
-            {/* <Blog /> */}
             <Clients />
             <Contact />
-            <MapSection />
             <Footer />
             <ScrollToTop />
         </>

@@ -796,7 +796,7 @@ const Footer = ({year}) => {
                                 <div className="footer-widget f-about">
                                     <div className="logo">
                                         <a href="/">
-                                            <img src="assets/images/logo.svg" alt="#" className="img-fluid" />
+                                            <img src="assets/images/cti-logo-white.png" alt="#" className="img-fluid" />
                                         </a>
                                     </div>
                                     <p>

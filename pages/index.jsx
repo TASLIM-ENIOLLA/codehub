@@ -126,7 +126,7 @@ const Header = () => {
                                 with the right knowledge from well experienced tutors, you can become a professional web developer in no time
                             </p>
                             <div className="button">
-                                <a className="btn primary-btn">Get Started</a>
+                                <a href = '#pricing' className="btn primary-btn">Get Started</a>
                                 {/* <a href="https://www.youtube.com/watch?v=r44RKWyfcFw&fbclid=IwAR21beSJORalzmzokxDRcGfkZA1AtRTE__l5N4r09HcGS5Y6vOluyouM9EM"
                                     className="glightbox video-button">
                                     <span className="btn icon-btn rounded-full">
@@ -420,7 +420,7 @@ const PricingArea = () => {
                                 </div>
                             </div>
                             <div className="light-rounded-buttons">
-                                <a className="btn primary-btn">
+                                <a href = 'https://ravesandbox.flutterwave.com/pay/7tgpswawqt4s' className="btn primary-btn">
                                     proceed to payment
                                 </a>
                             </div>

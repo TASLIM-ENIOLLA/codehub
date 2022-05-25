@@ -1,5 +1,9 @@
 import
 {useState} from 'react'
+import
+{server} from '../config'
+import
+{PHPLogo, NextJSLogo} from '../public/assets/svg'
 
 export default ({Footer: {year}}) => {
     Footer.defaultProps = {year: year}
@@ -79,14 +83,14 @@ const SideBarLeft = () => {
                     <div className="sidebar-menu">
                         <h5 className="menu-title">Quick Links</h5>
                         <ul>
-                            <li><a>Home</a></li>
-                            <li><a>Our Story</a></li>
-                            <li><a>Courses</a></li>
-                            <li><a>Blog</a></li>
-                            <li><a>Contact Us</a></li>
+                            <li><a href="#hero-area">Home</a></li>
+                            <li><a href="#about-us">About Us</a></li>
+                            <li><a href="#courses">Courses</a></li>
+                            <li><a href="#pricing">Pricing</a></li>
+                            <li><a href="#contact">Contact Us</a></li>
                         </ul>
                     </div>
-                    <div className="sidebar-social align-items-center justify-content-center">
+                    {/* <div className="sidebar-social align-items-center justify-content-center">
                         <h5 className="social-title">Follow Us On</h5>
                         <ul>
                             <li>
@@ -102,7 +106,7 @@ const SideBarLeft = () => {
                                 <a><i className="lni lni-youtube"></i></a>
                             </li>
                         </ul>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             <div className="overlay-left"></div>
@@ -247,37 +251,24 @@ const AboutArea = () => {
                                             type="button" role="tab" aria-controls="nav-who" aria-selected="true">Who We Are</button>
                                         <button className="nav-link" id="nav-vision-tab" data-bs-toggle="tab" data-bs-target="#nav-vision"
                                             type="button" role="tab" aria-controls="nav-vision" aria-selected="false">our Vision</button>
-                                        <button className="nav-link" id="nav-history-tab" data-bs-toggle="tab" data-bs-target="#nav-history"
-                                            type="button" role="tab" aria-controls="nav-history" aria-selected="false">our History</button>
                                     </div>
                                 </nav>
                                 <div className="tab-content" id="nav-tabContent">
                                     <div className="tab-pane fade show active" id="nav-who" role="tabpanel" aria-labelledby="nav-who-tab">
-                                        <p>It is a long established fact that a reader will be distracted by the readable content of a page
-                                            when
-                                            looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
-                                            distribution of letters, look like readable English.</p>
-                                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have in some
-                                            form,
-                                            by injected humour.</p>
+                                        <p>
+                                            At CodeHub Technological Institute, we provide the best avenue for people to acqiure various IT skill and apply them to solve real life problems.
+                                        </p>
+                                        <p>
+                                            We also empower people to allow them make a living by helping them become  professionals who can deliver value-oriented services to clients.
+                                        </p>
                                     </div>
                                     <div className="tab-pane fade" id="nav-vision" role="tabpanel" aria-labelledby="nav-vision-tab">
-                                        <p>It is a long established fact that a reader will be distracted by the readable content of a page
-                                            when
-                                            looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
-                                            distribution of letters, look like readable English.</p>
-                                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have in some
-                                            form,
-                                            by injected humour.</p>
-                                    </div>
-                                    <div className="tab-pane fade" id="nav-history" role="tabpanel" aria-labelledby="nav-history-tab">
-                                        <p>It is a long established fact that a reader will be distracted by the readable content of a page
-                                            when
-                                            looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
-                                            distribution of letters, look like readable English.</p>
-                                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have in some
-                                            form,
-                                            by injected humour.</p>
+                                        <p>
+                                            As the world is a global village, we want to ensure that everyone becomes employable through the acquisition of IT skills irrespective of location.
+                                        </p>
+                                        <p>
+                                            We also hope to make the world a better place by empowering people with IT skills and putting their skills to good use.
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -335,7 +326,7 @@ const Courses = () => {
                     <div className="col-lg-4 col-md-6">
                         <div className="single-services" style = {{minHeight: '300px'}}>
                             <div className="service-icon">
-                                <i className="lni">Next JS</i>
+                                <PHPLogo />
                             </div>
                             <div className="service-content">
                                 <h4>Next JS</h4>
@@ -348,7 +339,7 @@ const Courses = () => {
                     <div className="col-lg-4 col-md-6">
                         <div className="single-services" style = {{minHeight: '300px'}}>
                             <div className="service-icon">
-                                <i className="lni">PHP</i>
+                                <NextJSLogo />
                             </div>
                             <div className="service-content">
                                 <h4><abbr title="PHP HyperText Preprocessor">PHP</abbr></h4>
@@ -676,14 +667,32 @@ const Contact = () => {
                                     </div>
                                 </div>
                             </div>
-                            <form onSubmit = {(e) => {
+                            <form onSubmit = {async (e) => {
                                 e.preventDefault()
-                                formResponse({visible: true, theme: 'success', message: 'All went well!'})
+
+                                const req = await fetch(`${server.backend.url}/php/processes/Messages.php`, {
+                                    body: JSON.stringify(contactFormData),
+                                    method: 'POST'
+                                })
+                                const {type, message} = await req.json()
+
+                                formResponse({
+                                    visible: true,
+                                    theme: type === 'success' ? type : 'danger',
+                                    message: message
+                                })
+
+                                if(type === 'success'){
+                                    setContactFormData({name: '', email: '', phone: '', subject: '', message: ''})
+                                    setTimeout(() => {
+                                        formResponse({visible: false})
+                                    }, 2000);
+                                }
                             }} className="contact-form">
                                 <div className="row">{
                                     (response.visible)
                                     ? (
-                                        <div className = 'col-12 pb-4'>
+                                        <div key = {new Date().getTime} className = 'animated fadeIn col-12 pb-5'>
                                             <div style = {{borderRadius: '10px'}} className={`p-3 rounded-1x shadow-sm text-light fo-s-15 text-caps bg-${response.theme}`}>
                                                 {response.message}
                                             </div>
@@ -793,7 +802,7 @@ const Footer = ({year}) => {
                                 <div className="footer-widget f-about">
                                     <div className="logo">
                                         <a href="/">
-                                            <img src="assets/images/cti-logo.png" alt="#" className="img-fluid" />
+                                            <img src="assets/images/cti-logo.png" style = {{height: '100px'}} alt="#" className="img-fluid" />
                                         </a>
                                     </div>
                                     <p>
@@ -829,21 +838,41 @@ const Footer = ({year}) => {
                             </div>
                             <div className="col-lg-4 col-md-6 col-12">
                                 <div className="footer-widget newsletter">
-                                    <h5 className = 'mt-3'>Subscribe</h5>
-                                    <p>Subscribe to our newsletter for the latest updates</p>
-                                    <form onSubmit = {(e) => {
-                                        e.preventDefault()
-                                    }} className="newsletter-form">{
+                                    <h5 className = 'mt-4'>Subscribe</h5>
+                                    <p>Subscribe to our newsletter for the latest updates</p>{
                                         (response.visible)
                                         ? (
-                                            <div className = 'col-12 pb-4'>
+                                            <div data-timestamp = {new Date().getTime()} className = 'animated fadeIn col-12 pt-4'>
                                                 <div style = {{borderRadius: '10px'}} className={`p-3 rounded-1x shadow-sm text-light fo-s-15 text-caps bg-${response.theme}`}>
                                                     {response.message}
                                                 </div>
                                             </div>
                                         )
                                         : <></>
-                                    }<input name="email" onChange = {(e) => {
+                                    }
+                                    <form onSubmit = {async (e) => {
+                                        e.preventDefault()
+
+                                        const req = await fetch(`${server.backend.url}/php/processes/Newsletter.php`, {
+                                            body: JSON.stringify(footerNewsletterData),
+                                            method: 'POST'
+                                        })
+                                        const {type, message} = await req.json()
+        
+                                        formResponse({
+                                            visible: true,
+                                            theme: type === 'success' ? type : 'danger',
+                                            message: message
+                                        })
+
+                                        if(type === 'success'){
+                                            setFooterNewsletterData({email: ''})
+                                            setTimeout(() => {
+                                                formResponse({visible: false})
+                                            }, 2000);
+                                        }
+                                    }} className="newsletter-form">
+                                        <input name="email" onChange = {(e) => {
                                             setFooterNewsletterData({
                                                 ...footerNewsletterData,
                                                 email: e.target.value

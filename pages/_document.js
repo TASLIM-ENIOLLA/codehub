@@ -18,6 +18,7 @@ class MyDocument extends Document{
                     <link rel = 'stylesheet' href="/assets/css/glightbox.min.css" />
                     <link rel = 'stylesheet' href="/assets/css/style.css" />
                     <link rel = 'stylesheet' href="/assets/font-awesome/font-awesome/font-awesome.css" />
+                    <link rel = 'stylesheet' href="/assets/font-awesome/animate.css" />
                     <link rel = 'stylesheet' href="/assets/css/common.css" />
                 </Head>
                 <body>

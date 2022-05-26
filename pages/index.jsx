@@ -326,7 +326,7 @@ const Courses = () => {
                     <div className="col-lg-4 col-md-6">
                         <div className="single-services" style = {{minHeight: '300px'}}>
                             <div className="service-icon">
-                                <PHPLogo />
+                                <NextJSLogo />
                             </div>
                             <div className="service-content">
                                 <h4>Next JS</h4>
@@ -339,7 +339,7 @@ const Courses = () => {
                     <div className="col-lg-4 col-md-6">
                         <div className="single-services" style = {{minHeight: '300px'}}>
                             <div className="service-icon">
-                                <NextJSLogo />
+                                <PHPLogo />
                             </div>
                             <div className="service-content">
                                 <h4><abbr title="PHP HyperText Preprocessor">PHP</abbr></h4>
